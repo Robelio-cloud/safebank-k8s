@@ -1,32 +1,35 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: safebank-pod
+  name: safebank-web-pod
   labels:
-    app: safebank
+    app: safebank-web
+    tier: frontend
+    environment: development
 spec:
   containers:
-  - name: safebank-container
-    image: nginx:alpine
+  - name: safebank-web
+    image: nginx:1.25-alpine
     ports:
     - containerPort: 80
+      name: http
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "50m"
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
     volumeMounts:
-    - name: html
+    - name: safebank-content
       mountPath: /usr/share/nginx/html
+    env:
+    - name: ENVIRONMENT
+      value: "development"
+    - name: APPLICATION
+      value: "safebank-web"
   volumes:
-  - name: html
+  - name: safebank-content
     configMap:
       name: safebank-html
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: safebank-html
-data:
-  index.html: |
-    <html>
-      <head><title>SafeBank Digital</title></head>
-      <body>
-        <h1>SafeBank - Aplicação Kubernetes</h1>
-      </body>
-    </html>
+  restartPolicy: Always
