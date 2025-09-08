@@ -1,112 +1,116 @@
-# SafeBank Digital - Infraestrutura Kubernetes
+# SafeBank Digital - Kubernetes Infrastructure
 
----
+## Sobre o Projeto
 
-### Sobre o Projeto
+Este repositório contém a implementação da infraestrutura Kubernetes para a **SafeBank Digital**, uma empresa fictícia que está migrando seus sistemas legados para containers. O objetivo é demonstrar a capacidade de implantar e expor aplicações web em um ambiente Kubernetes real na AWS.
 
-Este repositório contém a implementação da infraestrutura **Kubernetes** para a **SafeBank Digital**, uma empresa fictícia que está migrando seus sistemas legados para containers. O objetivo é demonstrar a capacidade de implantar e expor aplicações web em um ambiente Kubernetes real na AWS.
+## Arquitetura da Solução
 
-### Arquitetura da Solução
+### Componentes Implementados
 
-#### Componentes Implementados
+- **Pod**: Container individual rodando aplicação web NGINX
+- **Deployment**: Gerenciamento de múltiplas réplicas da aplicação 
+- **Service**: Exposição da aplicação via AWS Load Balancer
+- **ConfigMap**: Conteúdo HTML customizado da aplicação
 
-* **Pod**: Container individual rodando aplicação web **NGINX**.
-* **Deployment**: Gerenciamento de múltiplas réplicas da aplicação.
-* **Service**: Exposição da aplicação via **AWS Load Balancer**.
-* **ConfigMap**: Conteúdo HTML customizado da aplicação.
+### Infraestrutura
 
-#### Infraestrutura
+- **Cloud Provider**: AWS EC2
+- **Kubernetes**: v1.31.12
+- **Container Runtime**: containerd
+- **CNI**: Flannel
+- **Cluster Type**: Single-node (control-plane sem taint)
 
-* **Cloud Provider**: AWS EC2
-* **Kubernetes**: v1.31.12
-* **Container Runtime**: containerd
-* **CNI**: Flannel
-* **Cluster Type**: Single-node (control-plane sem taint)
-* **Estratégia de Exposição**: LoadBalancer
+## Estratégia de Exposição: NodePort
 
----
+### Estratégia Escolhida: NodePort (porta 30080)
 
-### Escolha Técnica
+### Justificativa da Escolha
 
-Optei por utilizar um Service do tipo `LoadBalancer` com **AWS Network Load Balancer (NLB)**.
+#### Processo de Decisão:
 
-#### Justificativa da Escolha
+* **Tentativa inicial**: O objetivo era utilizar um `Service` do tipo `LoadBalancer` para simular um ambiente de produção real.
+* **Limitação identificada**: A criação automática de um AWS Elastic Load Balancer (ELB) por um `Service` do tipo `LoadBalancer` não funciona em uma instalação Kubernetes "standalone" em uma única instância EC2. Essa funcionalidade é nativa de serviços gerenciados como o Amazon EKS.
+* **Solução pragmática**: Para garantir a acessibilidade externa do projeto, a solução escolhida foi usar um `Service` do tipo `NodePort`, que expõe a aplicação em uma porta fixa (30080) em cada nó. Em seguida, um **Security Group da AWS** foi configurado para permitir o tráfego externo para essa porta.
+* **Resultado**: A aplicação ficou acessível externamente, mantendo a escalabilidade e a funcionalidade esperadas.
+* **Próximos passos**: Em um ambiente de produção real, como o **Amazon EKS**, a estratégia ideal seria usar novamente um `Service` do tipo `LoadBalancer` em conjunto com o **AWS Load Balancer Controller**, que gerencia de forma nativa a criação de ELBs na infraestrutura AWS.
 
-**Vantagens do LoadBalancer:**
+#### Vantagens do NodePort para este cenário:
 
-* **Proximidade com Produção Real**: Em ambientes de produção, LoadBalancers são o padrão para exposição de aplicações, abstraindo a complexidade de rede dos desenvolvedores.
-* **Integração nativa com a infraestrutura AWS**: Se integra perfeitamente com os recursos da AWS.
-* **Escalabilidade Automática**: O NLB distribui automaticamente o tráfego entre as réplicas, com suporte nativo a `health checks` e capacidade de lidar com alto volume de requisições.
-* **Segurança e Isolamento**: Não expõe portas específicas dos nós (como `NodePort` faria) e permite controle de acesso via Security Groups da AWS.
+1. **Funcionalidade Imediata**
+   - Exposição direta da aplicação sem dependências externas
+   - Controle total sobre a porta de exposição (30080)
+   - Compatível com qualquer infraestrutura Kubernetes
 
-**Comparação com Outras Opções:**
+2. **Integração com AWS**
+   - Security Groups da AWS para controle de acesso
+   - Escalabilidade horizontal dos pods mantida
+   - Monitoramento via CloudWatch possível
 
-| Opção | Uso | Por que foi preterida? |
-| :--- | :--- | :--- |
-| **Port-forward** | Desenvolvimento local | Não adequado para validação de infraestrutura |
-| **NodePort** | Exposição simples em portas dos nós | Menos elegante e mais limitado para ambientes de produção |
-| **LoadBalancer** | Solução de nível empresarial | Ideal para uma validação realista |
+3. **Simplicidade Operacional**
+   - Configuração direta e transparente
+   - Troubleshooting simplificado
+   - Adequado para ambientes de desenvolvimento e validação
 
----
+## Estrutura dos Arquivos
 
-### Estrutura dos Arquivos
-
+```
 ├── deployment.yaml    # Deployment com 3 réplicas + ConfigMap
-
 ├── service.yaml      # Service LoadBalancer com configurações AWS
-
 ├── pod.yaml          # Pod standalone para testes individuais
-
 └── README.md         # Documentação do projeto
+```
 
+## Como Implantar
 
+### Pré-requisitos
 
----
+- Cluster Kubernetes funcionando na AWS
+- kubectl configurado
+- Permissões AWS para criar Load Balancers
 
-### Como Implantar
+### Passos de Implantação
 
-#### Pré-requisitos
+1. **Clone o repositório**
+   ```bash
+   git clone https://github.com/Robelio-cloud/safebank-k8s.git
+   cd safebank-k8s
+   ```
 
-* Cluster Kubernetes funcionando na AWS.
-* `kubectl` configurado.
-* Permissões AWS para criar Load Balancers.
+2. **Implante o ConfigMap e Deployment**
+   ```bash
+   kubectl apply -f deployment.yaml
+   ```
 
-#### Passos de Implantação
+3. **Crie o Service LoadBalancer**
+   ```bash
+   kubectl apply -f service.yaml
+   ```
 
-1.  Clone o repositório:
-    ```bash
-    git clone [https://github.com/Robelio-cloud/safebank-k8s.git](https://github.com/Robelio-cloud/safebank-k8s.git)
-    cd safebank-k8s
-    ```
-2.  Implante o `ConfigMap` e `Deployment`:
-    ```bash
-    kubectl apply -f deployment.yaml
-    ```
-3.  Crie o Service `LoadBalancer`:
-    ```bash
-    kubectl apply -f service.yaml
-    ```
-4.  Verifique o status da implantação:
-    ```bash
-    kubectl get deployments
-    kubectl get pods -l app=safebank-web
-    kubectl get service safebank-web-service
-    ```
-5.  Obtenha o endpoint público:
-    ```bash
-    kubectl get service safebank-web-service -o wide
-    ```
+4. **Verifique o status da implantação**
+   ```bash
+   kubectl get deployments
+   kubectl get pods -l app=safebank-web
+   kubectl get service safebank-web-service
+   ```
 
-#### Implantação Alternativa (Pod Standalone)
+5. **Obtenha o endpoint público**
+   ```bash
+   kubectl get service safebank-web-service -o wide
+   ```
+
+### Implantação Alternativa (Pod Standalone)
 
 Para testes ou desenvolvimento:
-
 ```bash
 kubectl apply -f pod.yaml
-Validação da Solução
-Comandos de Verificação
-Bash
+```
 
+## Validação da Solução
+
+### Comandos de Verificação
+
+```bash
 # Verificar pods em execução
 kubectl get pods -l app=safebank-web -o wide
 
@@ -118,9 +122,11 @@ kubectl logs -l app=safebank-web --tail=10
 
 # Testar acesso interno
 kubectl port-forward service/safebank-web-service 8080:80
-Testes de Escalabilidade
-Bash
+```
 
+### Testes de Escalabilidade
+
+```bash
 # Escalar para 5 réplicas
 kubectl scale deployment safebank-web --replicas=5
 
@@ -129,10 +135,13 @@ kubectl get pods -l app=safebank-web -o wide
 
 # Retornar para 3 réplicas
 kubectl scale deployment safebank-web --replicas=3
-Monitoramento e Troubleshooting
-Logs e Debug
-Bash
+```
 
+## Monitoramento e Troubleshooting
+
+### Logs e Debug
+
+```bash
 # Logs detalhados do deployment
 kubectl describe deployment safebank-web
 
@@ -144,57 +153,49 @@ kubectl exec -it <pod-name> -- /bin/sh
 
 # Verificar eventos do cluster
 kubectl get events --sort-by='.metadata.creationTimestamp'
-Health Checks
+```
+
+### Health Checks
+
 A aplicação inclui:
+- **Liveness Probe**: Verifica se o container está saudável
+- **Readiness Probe**: Verifica se está pronto para receber tráfego
+- **Resource Limits**: Controle de CPU e memória
 
-Liveness Probe: Verifica se o container está saudável.
+## Recursos da Aplicação
 
-Readiness Probe: Verifica se está pronto para receber tráfego.
+### Página Web
 
-Resource Limits: Controle de CPU e memória.
-
-Recursos da Aplicação
-Página Web
 A aplicação web inclui:
+- Interface responsiva com design moderno
+- Informações sobre a infraestrutura Kubernetes
+- Status de health da aplicação
+- Identificação do pod/replica em execução
 
-Interface responsiva com design moderno.
+### Características Técnicas
 
-Informações sobre a infraestrutura Kubernetes.
+- **Image**: nginx:1.25-alpine (segura e otimizada)
+- **Resources**: CPU 50m-100m, Memory 64Mi-128Mi
+- **Port**: 80 (HTTP)
+- **Volume**: ConfigMap montado para conteúdo HTML
 
-Status de health da aplicação.
+## Conclusão
 
-Identificação do pod/réplica em execução.
-
-Características Técnicas
-Image: nginx:1.25-alpine (segura e otimizada)
-
-Resources: CPU 50m-100m, Memory 64Mi-128Mi
-
-Port: 80 (HTTP)
-
-Volume: ConfigMap montado para conteúdo HTML.
-
-Conclusão
 Esta implementação demonstra uma abordagem profissional para implantação de aplicações em Kubernetes, utilizando best practices como:
 
-Separação de concerns (Pod, Deployment, Service, ConfigMap).
+- Separação de concerns (Pod, Deployment, Service, ConfigMap)
+- Health checks e resource management
+- Estratégia de exposição adaptativa conforme limitações de infraestrutura
+- Documentação completa para o time de desenvolvimento
 
-Health checks e resource management.
+A solução com NodePort, embora diferente do planejado inicialmente, demonstra flexibilidade técnica e capacidade de adaptação às limitações reais da infraestrutura. O resultado final proporciona uma validação efetiva da infraestrutura Kubernetes, permitindo que a equipe de desenvolvimento da SafeBank Digital teste e valide suas aplicações em um ambiente containerizado funcional.
 
-Estratégia de exposição adequada para produção.
+A experiência de migrar de LoadBalancer para NodePort ilustra decisões técnicas do mundo real, onde soluções precisam ser adaptadas conforme o contexto e recursos disponíveis.
 
-Documentação completa para o time de desenvolvimento.
+## Próximos Passos
 
-A escolha do LoadBalancer proporciona uma experiência próxima ao ambiente de produção, facilitando a validação da infraestrutura pela equipe de desenvolvimento da SafeBank Digital.
-
-Próximos Passos
-Implementar HTTPS/SSL no Load Balancer.
-
-Adicionar métricas com Prometheus.
-
-Configurar CI/CD pipeline.
-
-Implementar logging centralizado.
-
-Adicionar testes automatizados.
-
+- Implementar HTTPS/SSL no Load Balancer
+- Adicionar métricas com Prometheus
+- Configurar CI/CD pipeline
+- Implementar logging centralizado
+- Adicionar testes automatizados
