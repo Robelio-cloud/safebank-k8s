@@ -144,7 +144,7 @@ data:
                 </div>
                 <div class="info-card">
                     <h3>⚡ Service</h3>
-                    <p>LoadBalancer (AWS ELB)</p>
+                    <p>NodePort (Porta 30080)</p>
                 </div>
                 <div class="info-card">
                     <h3>📊 Replicas</h3>
