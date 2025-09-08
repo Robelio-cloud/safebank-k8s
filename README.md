@@ -101,8 +101,8 @@ Este repositório contém a implementação da infraestrutura Kubernetes para a 
    ```
 ### Implantação Automatizada (./deploy.sh)
 
-![image](/assets/k8s-12.png)
-![image](/assets/k8s-12.1.png)
+![image](/assets/K8S-12.png)
+![image](/assets/K8S-12.1.png)
 
 ### Implantação Alternativa (Pod Standalone)
 
@@ -159,31 +159,33 @@ kubectl exec -it <pod-name> -- /bin/sh
 ```
 ### Imagens de comandos de verificação, escalabilidade e monitoramento
 
-![image](/assets/k8s-02.png)
+![image](/assets/k8s-01.png)
 
-![image](/assets/k8s-03.png)
+![image](/assets/K8S-02.png)
 
-![image](/assets/k8s-04.png)
+![image](/assets/K8S-03.png)
 
-![image](/assets/k8s-05.png)
+![image](/assets/K8S-04.png)
 
-![image](/assets/k8s-05.png)
+![image](/assets/K8S-05.png)
 
-![image](/assets/k8s-07.png)
+![image](/assets/K8S-05.png)
 
-![image](/assets/k8s-08.png)
+![image](/assets/K8S-07.png)
 
-![image](/assets/k8s-09.png)
+![image](/assets/K8S-08.png)
 
-![image](/assets/k8s-10.png)
+![image](/assets/K8S-09.png)
 
-![image](assets/k8s-11.png)
+![image](/assets/K8S-10.png)
 
-![image](/assets/k8s-13.png)
+![image](/assets/K8S-11.png)
 
-![image](/assets/k8s-14-descr.png)
+![image](/assets/K8S-13.png)
 
-![image](/assets/k8s-15-logs.png)
+![image](/assets/K8S-14-descr.png)
+
+![image](/assets/K8S-15-logs.png)
 
 
 ### Health Checks
