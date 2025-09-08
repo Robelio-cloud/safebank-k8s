@@ -99,6 +99,10 @@ Este repositório contém a implementação da infraestrutura Kubernetes para a 
    ```bash
    kubectl get service safebank-web-service -o wide
    ```
+### Implantação Automatizada (./deploy.sh)
+
+![image](assets/k8s-12.png)
+![image](assets/k8s-12.1.png)
 
 ### Implantação Alternativa (Pod Standalone)
 
@@ -152,9 +156,35 @@ kubectl logs <pod-name>
 # Executar shell dentro do pod
 kubectl exec -it <pod-name> -- /bin/sh
 
-# Verificar eventos do cluster
-kubectl get events --sort-by='.metadata.creationTimestamp'
 ```
+### Imagens de comandos de verificação, escalabilidade e monitoramento
+
+![image](assets/k8s-02.png)
+
+![image](assets/k8s-03.png)
+
+![image](assets/k8s-04.png)
+
+![image](assets/k8s-05.png)
+
+![image](assets/k8s-05.png)
+
+![image](assets/k8s-07.png)
+
+![image](assets/k8s-08.png)
+
+![image](assets/k8s-09.png)
+
+![image](assets/k8s-10.png)
+
+![image](assets/k8s-11.png)
+
+![image](assets/k8s-13.png)
+
+![image](assets/k8s-14-descr.png)
+
+![image](assets/k8s-15-logs.png)
+
 
 ### Health Checks
 
@@ -172,6 +202,8 @@ A aplicação web inclui:
 - Informações sobre a infraestrutura Kubernetes
 - Status de health da aplicação
 - Identificação do pod/replica em execução
+
+![image](assets/k8s-03.1.png)
 
 ### Características Técnicas
 
