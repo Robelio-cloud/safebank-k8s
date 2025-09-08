@@ -1,5 +1,7 @@
 # SafeBank Digital - Kubernetes Infrastructure
 
+![image](/assets/K8S-03.1.png)
+
 ## Sobre o Projeto
 
 Este repositório contém a implementação da infraestrutura Kubernetes para a **SafeBank Digital**, uma empresa fictícia que está migrando seus sistemas legados para containers. O objetivo é demonstrar a capacidade de implantar e expor aplicações web em um ambiente Kubernetes real na AWS.
