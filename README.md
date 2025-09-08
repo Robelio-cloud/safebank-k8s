@@ -52,9 +52,13 @@ Optei por utilizar um Service do tipo `LoadBalancer` com **AWS Network Load Bala
 ### Estrutura dos Arquivos
 
 ├── deployment.yaml    # Deployment com 3 réplicas + ConfigMap
+
 ├── service.yaml      # Service LoadBalancer com configurações AWS
+
 ├── pod.yaml          # Pod standalone para testes individuais
+
 └── README.md         # Documentação do projeto
+
 
 
 ---
