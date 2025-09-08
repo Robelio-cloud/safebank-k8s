@@ -159,11 +159,9 @@ kubectl exec -it <pod-name> -- /bin/sh
 ```
 ### Imagens de comandos de verificação, escalabilidade e monitoramento
 
-![image](/assets/k8s-01.png)
+![image](/assets/K8S-01.png)
 
 ![image](/assets/K8S-02.png)
-
-![image](/assets/K8S-03.png)
 
 ![image](/assets/K8S-04.png)
 
@@ -205,7 +203,7 @@ A aplicação web inclui:
 - Status de health da aplicação
 - Identificação do pod/replica em execução
 
-![image](assets/k8s-03.1.png)
+![image](/assets/K8S-03.1.png)
 
 ### Características Técnicas
 
