@@ -81,7 +81,7 @@ Após a instalação teremos:
 
 ### Passos de Implantação na EC2 já configurada na AWS.
 
-![image](/assets/K8S-16.png)
+![image](/assets/K8S-16-ec2.png)
 
 1. **Clone o repositório**
 
