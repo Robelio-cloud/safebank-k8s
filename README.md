@@ -8,10 +8,6 @@ Este repositório contém a implementação da infraestrutura Kubernetes para a 
 
 ## Pré requisitos:
 
-
-
-
-
 ## Arquitetura da Solução
 
 ### Componentes Implementados
@@ -123,7 +119,7 @@ Aplica o arquivo service.yaml para expor a aplicação por meio de um LoadBalanc
 
 Monitora o status do deployment para garantir que ele seja concluído.
 
-Espera até que o LoadBalancer tenha uma URL externa.
+Espera até que o NodePort tenha uma URL externa.
 
 Realiza testes de conectividade para confirmar se a aplicação está respondendo corretamente.
 
@@ -233,13 +229,6 @@ kubectl exec -it <pod-name> -- /bin/sh
 
 ![image](/assets/K8S-15-logs.png)
 
-
-### Health Checks
-
-A aplicação inclui:
-- **Liveness Probe**: Verifica se o container está saudável
-- **Readiness Probe**: Verifica se está pronto para receber tráfego
-- **Resource Limits**: Controle de CPU e memória
 
 ## Recursos da Aplicação
 
