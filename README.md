@@ -83,6 +83,10 @@ Após a instalação teremos:
 
 ![image](/assets/K8S-16-ec2.png)
 
+### Configurar Security Group com regra de entrada Custom TCP com a porta 30080 para uso do NodePort:
+
+![image](/assets/K8S-17-sg.png)
+
 1. **Clone o repositório**
 
 Acessar a EC2 Safebank Sever por ssh ou conectar pelo console da AWS.
