@@ -81,8 +81,12 @@ Após a instalação teremos:
 
 ### Passos de Implantação na EC2 já configurada na AWS.
 
+![image](/assets/K8S-16.png)
 
 1. **Clone o repositório**
+
+Acessar a EC2 Safebank Sever por ssh ou conectar pelo console da AWS.
+
    ```bash
    git clone https://github.com/Robelio-cloud/safebank-k8s.git
    cd safebank-k8s
