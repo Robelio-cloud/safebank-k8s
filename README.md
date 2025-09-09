@@ -6,6 +6,12 @@
 
 Este repositório contém a implementação da infraestrutura Kubernetes para a **SafeBank Digital**, uma empresa fictícia que está migrando seus sistemas legados para containers. O objetivo é demonstrar a capacidade de implantar e expor aplicações web em um ambiente Kubernetes real na AWS.
 
+## Pré requisitos:
+
+
+
+
+
 ## Arquitetura da Solução
 
 ### Componentes Implementados
@@ -31,11 +37,10 @@ Este repositório contém a implementação da infraestrutura Kubernetes para a 
 
 #### Processo de Decisão:
 
-* **Tentativa inicial**: O objetivo era utilizar um `Service` do tipo `LoadBalancer` para simular um ambiente de produção real.
 * **Limitação identificada**: A criação automática de um AWS Elastic Load Balancer (ELB) por um `Service` do tipo `LoadBalancer` não funciona em uma instalação Kubernetes "standalone" em uma única instância EC2. Essa funcionalidade é nativa de serviços gerenciados como o Amazon EKS.
 * **Solução pragmática**: Para garantir a acessibilidade externa do projeto, a solução escolhida foi usar um `Service` do tipo `NodePort`, que expõe a aplicação em uma porta fixa (30080) em cada nó. Em seguida, um **Security Group da AWS** foi configurado para permitir o tráfego externo para essa porta.
 * **Resultado**: A aplicação ficou acessível externamente, mantendo a escalabilidade e a funcionalidade esperadas.
-* **Próximos passos**: Em um ambiente de produção real, como o **Amazon EKS**, a estratégia ideal seria usar novamente um `Service` do tipo `LoadBalancer` em conjunto com o **AWS Load Balancer Controller**, que gerencia de forma nativa a criação de ELBs na infraestrutura AWS.
+
 
 #### Vantagens do NodePort para este cenário:
 
@@ -68,43 +73,84 @@ Este repositório contém a implementação da infraestrutura Kubernetes para a 
 
 ### Pré-requisitos
 
+Seguir o guia de instalação de Kubernetes em instância EC2 na AWS conforme link abaixo:
+
+https://github.com/camanducci/k8s-lesson-2TCNPZ/blob/main/kubernetes/Install.md
+
+Após a instalação teremos:
+
 - Cluster Kubernetes funcionando na AWS
 - kubectl configurado
-- Permissões AWS para criar Load Balancers
 
-### Passos de Implantação
+
+### Passos de Implantação na EC2 já configurada na AWS.
+
 
 1. **Clone o repositório**
    ```bash
    git clone https://github.com/Robelio-cloud/safebank-k8s.git
    cd safebank-k8s
    ```
+### Implantação Automatizada (./deploy.sh)
 
-2. **Implante o ConfigMap e Deployment**
+Tornar o deploy.sh executável:
+
+chmod +x deploy.sh
+
+Executar:
+
+./deploy.sh
+
+![image](/assets/K8S-12.png)
+![image](/assets/K8S-12.1.png)
+
+### Etapas de Execução
+Este script de shell automatiza o processo de implantação da aplicação "SafeBank Digital" em um cluster Kubernetes.
+
+### Verificação de Ambiente:
+
+Confere se o kubectl está instalado e conectado a um cluster Kubernetes.
+
+Detecta se o script está sendo executado em um ambiente AWS.
+
+### Implantação no Kubernetes:
+
+Aplica o arquivo deployment.yaml para criar a aplicação e o ConfigMap.
+
+Aplica o arquivo service.yaml para expor a aplicação por meio de um LoadBalancer.
+
+### Validação e Testes:
+
+Monitora o status do deployment para garantir que ele seja concluído.
+
+Espera até que o LoadBalancer tenha uma URL externa.
+
+Realiza testes de conectividade para confirmar se a aplicação está respondendo corretamente.
+
+
+### Implantação Manual
+
+1. **Implante o ConfigMap e Deployment**
    ```bash
    kubectl apply -f deployment.yaml
    ```
 
-3. **Crie o Service LoadBalancer**
+2. **Crie o Service NodePort**
    ```bash
    kubectl apply -f service.yaml
    ```
 
-4. **Verifique o status da implantação**
+3. **Verifique o status da implantação**
    ```bash
    kubectl get deployments
    kubectl get pods -l app=safebank-web
    kubectl get service safebank-web-service
    ```
 
-5. **Obtenha o endpoint público**
+4. **Obtenha o endpoint público**
    ```bash
    kubectl get service safebank-web-service -o wide
    ```
-### Implantação Automatizada (./deploy.sh)
-
-![image](/assets/K8S-12.png)
-![image](/assets/K8S-12.1.png)
 
 ### Implantação Alternativa (Pod Standalone)
 
@@ -223,14 +269,4 @@ Esta implementação demonstra uma abordagem profissional para implantação de 
 - Estratégia de exposição adaptativa conforme limitações de infraestrutura
 - Documentação completa para o time de desenvolvimento
 
-A solução com NodePort, embora diferente do planejado inicialmente, demonstra flexibilidade técnica e capacidade de adaptação às limitações reais da infraestrutura. O resultado final proporciona uma validação efetiva da infraestrutura Kubernetes, permitindo que a equipe de desenvolvimento da SafeBank Digital teste e valide suas aplicações em um ambiente containerizado funcional.
-
-A experiência de migrar de LoadBalancer para NodePort ilustra decisões técnicas do mundo real, onde soluções precisam ser adaptadas conforme o contexto e recursos disponíveis.
-
-## Próximos Passos
-
-- Implementar HTTPS/SSL no Load Balancer
-- Adicionar métricas com Prometheus
-- Configurar CI/CD pipeline
-- Implementar logging centralizado
-- Adicionar testes automatizados
+A solução com NodePort, demonstra flexibilidade técnica e capacidade de adaptação às limitações reais da infraestrutura. O resultado final proporciona uma validação efetiva da infraestrutura Kubernetes, permitindo que a equipe de desenvolvimento da SafeBank Digital teste e valide suas aplicações em um ambiente containerizado funcional.
