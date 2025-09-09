@@ -242,7 +242,7 @@ kubectl exec -it <pod-name> -- /bin/sh
 
 ### Página Web
 
-### http://<IP PUBLICO DA EC2>:30080/
+### http://< PUBLIC_IP >:30080/
 
 Verficar o IP público da instância EC2 para colocar no link.
 
