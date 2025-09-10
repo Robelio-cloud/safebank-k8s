@@ -125,7 +125,7 @@ Executar:
 ![image](/assets/K8S-12.png)
 ![image](/assets/K8S-12.1.png)
 
-### Etapas de Execução
+### Etapas de Execução do deploy.sh
 Este script de shell automatiza o processo de implantação da aplicação "SafeBank Digital" em um cluster Kubernetes.
 
 ### Verificação de Ambiente:
