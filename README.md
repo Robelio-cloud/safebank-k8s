@@ -138,7 +138,7 @@ Detecta se o script está sendo executado em um ambiente AWS.
 
 Aplica o arquivo deployment.yaml para criar a aplicação e o ConfigMap.
 
-Aplica o arquivo service.yaml para expor a aplicação por meio de um LoadBalancer.
+Aplica o arquivo service.yaml para expor a aplicação via NodePort.
 
 ### Validação e Testes:
 
