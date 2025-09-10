@@ -91,7 +91,12 @@ Após a instalação teremos:
 
 1. **Clone o repositório**
 
-Acessar a EC2 Safebank Sever por ssh ou conectar pelo console da AWS.
+Acessar a EC2 Safebank Sever por ssh - pegar o IP Público no console AWS- ou conectar pelo console da AWS:
+
+
+   ```bash
+   ssh -i "safebank.pem" ubuntu@< PUBLIC IP da EC2 > 
+   ```
 
    ```bash
    git clone https://github.com/Robelio-cloud/safebank-k8s.git
