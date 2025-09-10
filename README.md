@@ -14,7 +14,7 @@ Este repositório contém a implementação da infraestrutura Kubernetes para a 
 
 - **Pod**: Container individual rodando aplicação web NGINX
 - **Deployment**: Gerenciamento de múltiplas réplicas da aplicação 
-- **Service**: Exposição da aplicação via AWS Load Balancer
+- **Service**: Exposição da aplicação via NodePort
 - **ConfigMap**: Conteúdo HTML customizado da aplicação
 
 ### Infraestrutura
@@ -34,6 +34,7 @@ Este repositório contém a implementação da infraestrutura Kubernetes para a 
 #### Processo de Decisão:
 
 * **Limitação identificada**: A criação automática de um AWS Elastic Load Balancer (ELB) por um `Service` do tipo `LoadBalancer` não funciona em uma instalação Kubernetes "standalone" em uma única instância EC2. Essa funcionalidade é nativa de serviços gerenciados como o Amazon EKS.
+* **Objetivo do projeto**: O objetivo do projeto era demonstrar uma aplicação acessível externamente de forma permanente, algo que o Port-Forward não poderia oferecer.
 * **Solução pragmática**: Para garantir a acessibilidade externa do projeto, a solução escolhida foi usar um `Service` do tipo `NodePort`, que expõe a aplicação em uma porta fixa (30080) em cada nó. Em seguida, um **Security Group da AWS** foi configurado para permitir o tráfego externo para essa porta.
 * **Resultado**: A aplicação ficou acessível externamente, mantendo a escalabilidade e a funcionalidade esperadas.
 
