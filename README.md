@@ -91,17 +91,27 @@ Após a instalação teremos:
 
 1. **Clone o repositório**
 
-Acessar a EC2 Safebank Sever por ssh - pegar o IP Público no console AWS- ou conectar pelo console da AWS:
+### Acessar a EC2 Safebank Sever por ssh pegando o IP Público no console AWS: 
 
 
    ```bash
    ssh -i "safebank.pem" ubuntu@< PUBLIC IP da EC2 > 
    ```
+![image](/assets/K8S-19-wsl.png)
+
+### Ou conectar pelo console da AWS:
+
+![image](/assets/K8S-18-con.png)
+
+
+### Clonar o repositório "safebank-k8s" na EC2:
 
    ```bash
    git clone https://github.com/Robelio-cloud/safebank-k8s.git
    cd safebank-k8s
    ```
+Após o comando "cd safebank-k8s", estaremos dentro da pasta "safebank-k8s" recém criada.
+
 ### Implantação Automatizada (./deploy.sh)
 
 Tornar o deploy.sh executável:
