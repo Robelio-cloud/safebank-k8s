@@ -31,10 +31,10 @@ Este repositório contém a implementação da infraestrutura Kubernetes para a 
 
 ### Justificativa da Escolha
 
-#### Processo de Decisão:
+#### Processo de Decisão frente ao Load Balancer e Port-Forward:
 
 * **Limitação identificada**: A criação automática de um AWS Elastic Load Balancer (ELB) por um `Service` do tipo `LoadBalancer` não funciona em uma instalação Kubernetes "standalone" em uma única instância EC2. Essa funcionalidade é nativa de serviços gerenciados como o Amazon EKS.
-* **Objetivo do projeto**: O objetivo do projeto era demonstrar uma aplicação acessível externamente de forma permanente, algo que o Port-Forward não poderia oferecer.
+* **Objetivo desejado**: O desejo do projeto era demonstrar uma aplicação acessível externamente de forma permanente, algo que o Port-Forward não poderia oferecer.
 * **Solução pragmática**: Para garantir a acessibilidade externa do projeto, a solução escolhida foi usar um `Service` do tipo `NodePort`, que expõe a aplicação em uma porta fixa (30080) em cada nó. Em seguida, um **Security Group da AWS** foi configurado para permitir o tráfego externo para essa porta.
 * **Resultado**: A aplicação ficou acessível externamente, mantendo a escalabilidade e a funcionalidade esperadas.
 
@@ -59,6 +59,7 @@ Este repositório contém a implementação da infraestrutura Kubernetes para a 
 ## Estrutura dos Arquivos
 
 ```
+├── assets            # Pasta com prints de telas de comandos e Web-Site da aplicação 
 ├── deploy.sh          # Script de automatização que dispara e orquestra os comandos do Kubernetes 
 ├── deployment.yaml    # Deployment com 3 réplicas + ConfigMap
 ├── service.yaml      # Service LoadBalancer com configurações AWS
