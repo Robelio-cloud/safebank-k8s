@@ -201,8 +201,10 @@ kubectl port-forward service/safebank-web-service 8080:80
 ### Testes de Escalabilidade
 
 ```bash
-# Escalar para 5 réplicas
-kubectl scale deployment safebank-web --replicas=5
+# Escalar para 10 réplicas
+kubectl scale deployment safebank-web --replicas=510
+
+![image](/assets/K8S-20-sca.png)
 
 # Verificar distribuição
 kubectl get pods -l app=safebank-web -o wide
