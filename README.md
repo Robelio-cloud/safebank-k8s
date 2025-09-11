@@ -239,7 +239,7 @@ kubectl exec -it <pod-name> -- /bin/sh
 
 ![image](/assets/K8S-13.png)
 
-### Imagens de comandos de verificação, escalabilidade e monitoramento da aplicação:
+### Imagens de comandos diversos:
 
 ![image](/assets/K8S-01.png)
 
