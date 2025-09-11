@@ -205,7 +205,7 @@ kubectl port-forward service/safebank-web-service 8080:80
 
 ```bash
 # Escalar para 10 réplicas
-kubectl scale deployment safebank-web --replicas=510
+kubectl scale deployment safebank-web --replicas=10
 
 # Verificar distribuição
 kubectl get pods -l app=safebank-web -o wide
