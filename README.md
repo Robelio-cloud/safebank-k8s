@@ -218,6 +218,14 @@ kubectl scale deployment safebank-web --replicas=3
 
 ![image](/assets/K8S-21-sca.png)
 
+## Troca da versão da imagem do nginx:1.25-alpine  para nginx:1.26-alpine instantaneamente:
+
+```bash
+# Este é o comando que inicia a atualização. Ele instrui o Kubernetes a mudar a imagem do container safebank-web no Deployment chamado safebank-web para a nova versão nginx:1.26-alpine. 
+kubectl set image deployment/safebank-web safebank-web=nginx:1.26-alpine
+```
+![image](/assets/K8S-24-img.png)
+
 ## Monitoramento e Troubleshooting
 
 ### Logs e Debug
