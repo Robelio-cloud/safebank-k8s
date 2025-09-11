@@ -226,6 +226,8 @@ kubectl set image deployment/safebank-web safebank-web=nginx:1.26-alpine
 ```
 ![image](/assets/K8S-24-img.png)
 
+![image](/assets/K8S-9.1.png)
+
 ## Monitoramento e Troubleshooting
 
 ### Logs e Debug
