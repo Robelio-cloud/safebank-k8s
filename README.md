@@ -192,11 +192,14 @@ kubectl get pods -l app=safebank-web -o wide
 kubectl get svc safebank-web-service
 
 # Verificar logs da aplicação
-kubectl logs -l app=safebank-web --tail=10
+kubectl logs -l app=safebank-web --tail=2
 
 # Testar acesso interno
 kubectl port-forward service/safebank-web-service 8080:80
 ```
+![image](/assets/K8S-23-app.png)
+
+![image](/assets/K8S-22-ace.png)
 
 ### Testes de Escalabilidade
 
@@ -204,14 +207,16 @@ kubectl port-forward service/safebank-web-service 8080:80
 # Escalar para 10 réplicas
 kubectl scale deployment safebank-web --replicas=510
 
-![image](/assets/K8S-20-sca.png)
-
 # Verificar distribuição
 kubectl get pods -l app=safebank-web -o wide
 
 # Retornar para 3 réplicas
 kubectl scale deployment safebank-web --replicas=3
 ```
+
+![image](/assets/K8S-20-sca.png)
+
+![image](/assets/K8S-21-sca.png)
 
 ## Monitoramento e Troubleshooting
 
@@ -228,6 +233,12 @@ kubectl logs <pod-name>
 kubectl exec -it <pod-name> -- /bin/sh
 
 ```
+![image](/assets/K8S-14-descr.png)
+
+![image](/assets/K8S-15-logs.png)
+
+![image](/assets/K8S-13.png)
+
 ### Imagens de comandos de verificação, escalabilidade e monitoramento da aplicação:
 
 ![image](/assets/K8S-01.png)
@@ -249,12 +260,6 @@ kubectl exec -it <pod-name> -- /bin/sh
 ![image](/assets/K8S-10.png)
 
 ![image](/assets/K8S-11.png)
-
-![image](/assets/K8S-13.png)
-
-![image](/assets/K8S-14-descr.png)
-
-![image](/assets/K8S-15-logs.png)
 
 
 ## Recursos da Aplicação
