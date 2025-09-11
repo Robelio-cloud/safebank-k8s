@@ -62,7 +62,7 @@ Este repositório contém a implementação da infraestrutura Kubernetes para a 
 ├── assets            # Pasta com prints de telas de comandos e Web-Site da aplicação 
 ├── deploy.sh          # Script de automatização que dispara e orquestra os comandos do Kubernetes 
 ├── deployment.yaml    # Deployment com 3 réplicas + ConfigMap
-├── service.yaml      # Service LoadBalancer com configurações AWS
+├── service.yaml      # Service NodePort com configurações na AWS
 ├── pod.yaml          # Pod standalone para testes individuais
 └── README.md         # Documentação do projeto
 ```
