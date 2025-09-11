@@ -283,7 +283,6 @@ A aplicação web inclui:
 Esta implementação demonstra uma abordagem profissional para implantação de aplicações em Kubernetes, utilizando best practices como:
 
 - Separação de concerns (Pod, Deployment, Service, ConfigMap)
-- Health checks e resource management
 - Estratégia de exposição adaptativa conforme limitações de infraestrutura
 - Documentação completa para o time de desenvolvimento
 
