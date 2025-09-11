@@ -249,8 +249,6 @@ kubectl exec -it <pod-name> -- /bin/sh
 
 ![image](/assets/K8S-05.png)
 
-![image](/assets/K8S-05.png)
-
 ![image](/assets/K8S-07.png)
 
 ![image](/assets/K8S-08.png)
